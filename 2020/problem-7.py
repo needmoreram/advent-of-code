@@ -2,6 +2,7 @@ import re
 
 rules = {}
 invrules = {}
+subbags = {}
 exp = re.compile('(\d+) (\w+ \w+)')
 
 with open('input-7.txt') as f:
@@ -15,10 +16,12 @@ with open('input-7.txt') as f:
             if m:
                 n = m.group(1)
                 t = m.group(2)
-                rules[forbag].append((n, t))
+                rules[forbag].append((int(n), t))
                 if t not in invrules:
                     invrules[t] = []
                 invrules[t].append(forbag)
+        if rules[forbag] == []:
+            subbags[forbag] = 0
         rule = f.readline()
 
 q = invrules["shiny gold"]
@@ -37,3 +40,15 @@ while len(q) > 0:
         if morebags not in q:
             q.append(morebags)
 print("part 1:", ans)
+
+def explore_bag(bag_name):
+    if bag_name in subbags:
+        return subbags[bag_name]
+    subbags[bag_name] = 0
+    q = rules[bag_name]
+    while len(q) > 0:
+        bag = q.pop(0)
+        v = explore_bag(bag[1]) + 1
+        subbags[bag_name] += v * bag[0]
+    return subbags[bag_name]
+print("part 2:", explore_bag("shiny gold"))
