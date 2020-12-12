@@ -1,30 +1,23 @@
 import numpy as np
+from scipy.ndimage import convolve
 
 with open('input-11.txt') as f:
-    grid = f.read().splitlines()
-    grid = list(map(list, grid))
-    grid = np.array(grid)
-    grid = np.pad(grid, 1, 'constant', constant_values=('.'))
+    grid = map(list, f.read().splitlines())
+    grid = np.array(list(grid))
+    ng = np.zeros(grid.shape, np.int)
 
-def num_neighbour_seats(g, i, j):
-    gs = g[i-1:i+2, j-1:j+2]
-    n = len(gs[gs == '#'])
-    n -= 1 if gs[1, 1] == '#' else 0
-    assert n <= 8
-    return n
+k = np.ones((3, 3))
+k[1, 1] = 0
 
-not_stable = True
-while not_stable:
-    oldgrid = grid.copy()
-    for i in range(1, grid.shape[0]-1):
-        for j in range(1, grid.shape[1]-1):
-            if grid[i, j] == '.':
-                continue
-            n = num_neighbour_seats(oldgrid, i, j)
-            if n == 0:
-                grid[i, j] = '#'
-            elif n >= 4:
-                grid[i, j] = 'L'
-    if np.array_equal(oldgrid, grid):
-        not_stable = False
+while True:
+    c = convolve(ng, k, mode='constant', cval = 0)
+    c[np.where(grid == '.')] = -1
+    vacate = np.where(c >= 4)
+    place = np.where(c == 0)
+    if np.all(ng[vacate] == 0) and np.all(ng[place] == 1):
+        break
+    grid[vacate] = 'L'
+    ng[vacate] = 0
+    grid[place] = '#'
+    ng[place] = 1
 print("part 1:", len(grid[grid == '#']))
