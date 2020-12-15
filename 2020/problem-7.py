@@ -5,7 +5,7 @@ invrules = {}
 subbags = {}
 exp = re.compile('(\d+) (\w+ \w+)')
 
-with open('input-7.txt') as f:
+with open('input/input-7.txt') as f:
     rule = f.readline()
     while rule:
         rule = rule.split(' bag')

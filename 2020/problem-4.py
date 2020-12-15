@@ -1,4 +1,4 @@
-with open('input-4.txt') as f:
+with open('input/input-4.txt') as f:
     passports = f.read().split('\n\n')
 
 valid_entries = 0

@@ -1,4 +1,4 @@
-with open('input-8.txt') as f:
+with open('input/input-8.txt') as f:
     program = f.read().splitlines()
 
 def expgm(program):

@@ -1,4 +1,4 @@
-with open('input-10.txt') as f:
+with open('input/input-10.txt') as f:
     adaps = [0] + list(map(int, f.read().splitlines()))
     adaps.sort()
 

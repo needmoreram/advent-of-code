@@ -1,4 +1,4 @@
-with open('input-6.txt') as f:
+with open('input/input-6.txt') as f:
     groups = f.read().split('\n\n')
 
 sum_any = 0

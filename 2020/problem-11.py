@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.ndimage import convolve
 
-with open('input-11.txt') as f:
+with open('input/input-11.txt') as f:
     g = map(list, f.read().splitlines())
     g = np.array(list(g))
     dots = np.where(g == '.')

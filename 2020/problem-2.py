@@ -1,7 +1,7 @@
 import re
 
 pws = []
-with open('input-2.txt') as f:
+with open('input/input-2.txt') as f:
     for line in f:
         pws.append(re.split("-| |: ", line))
 

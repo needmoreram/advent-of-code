@@ -1,4 +1,4 @@
-with open('input-5.txt') as f:
+with open('input/input-5.txt') as f:
     seats = f.read().splitlines()
 
 d = []

@@ -1,4 +1,4 @@
-with open('input-3.txt') as f:
+with open('input/input-3.txt') as f:
     world = f.read().splitlines()
 
 def use_slope(rt, dn):

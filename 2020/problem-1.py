@@ -1,4 +1,4 @@
-with open('input-1.txt') as f:
+with open('input/input-1.txt') as f:
     nums = list(map(int, f.read().splitlines()))
 
 d = {}
