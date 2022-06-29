@@ -1,30 +1,15 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 fn main() {
-  let file = File::open("input/day-2.txt").unwrap();
-  let reader = BufReader::new(file);
-
-  let mut hpos = 0;
-  let mut depth = 0;
-  let mut aim = 0;
-
-  for line in reader.lines() {
-    let line = line.unwrap();
-    let instr: Vec<&str> = line.split(" ").collect();
-    let amount: i32 = instr[1].parse().unwrap();
-    if instr[0].eq("forward") {
-      hpos += amount;
-      depth += aim * amount;
-    } else if instr[0].eq("down") {
-      aim += amount;
-    } else if instr[0].eq("up") {
-      aim -= amount;
-    } else {
-      panic!("Don't know how to '{}'", instr[0]);
+  let lines = include_str!("input/day-2.txt").lines();
+  let instructions = lines.map(|v| v.split_once(' ').unwrap());
+  let (depth1, hpos, depth2, _) = instructions.fold(
+    (0, 0, 0, 0), |(d1, h, d2, a), (i, v)| {
+      match (i, v.parse::<i32>().unwrap()) {
+        ("forward", v) => (  d1  , h + v, d2 + a * v,   a  ),
+        (   "down", v) => (d1 + v,   h  ,      d2   , a + v),
+        (     "up", v) => (d1 - v,   h  ,      d2   , a - v),
+                     _ => unreachable!()
+      }
     }
-  }
-
-  println!("{}", hpos * aim);
-  println!("{}", hpos * depth);
+  );
+  println!("{}\n{}", depth1 * hpos, depth2 * hpos);
 }
